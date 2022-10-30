@@ -1,0 +1,15 @@
+{
+  "TableName": "entity",
+  "KeySchema": [
+    { "AttributeName": "Id", "KeyType": "HASH" },
+    { "AttributeName": "Name", "KeyType": "RANGE" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "Id", "AttributeType": "S" },
+    { "AttributeName": "Name", "AttributeType": "S" }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 3,
+    "WriteCapacityUnits": 3
+  }
+}
