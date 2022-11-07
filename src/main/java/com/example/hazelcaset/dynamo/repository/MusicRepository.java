@@ -5,8 +5,6 @@ import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScanCount;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 @EnableScan
 @EnableScanCount
 public interface MusicRepository extends CrudRepository<Music, String> {

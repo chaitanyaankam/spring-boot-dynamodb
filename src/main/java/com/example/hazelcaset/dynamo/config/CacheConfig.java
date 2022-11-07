@@ -4,12 +4,16 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CacheConfig {
+
+    @Autowired
+    private CachePropertiesConfig cachePropertiesConfig;
 
     @Bean
     public Config hazelCastConfig(){
@@ -20,11 +24,17 @@ public class CacheConfig {
                 .getJoin()
                 .getMulticastConfig().setEnabled(true);
 
-        config.addMapConfig(new MapConfig()
-            .setName("music-cache").setTimeToLiveSeconds(500000)
-            .setEvictionConfig(new EvictionConfig().setSize(20)
-                    .setMaxSizePolicy(MaxSizePolicy.FREE_HEAP_SIZE)
-                    .setEvictionPolicy(EvictionPolicy.LRU)));
+        cachePropertiesConfig
+                .getCaches()
+                .forEach(cacheConfig -> {
+                    config.addMapConfig(new MapConfig()
+                            .setName(cacheConfig.getName())
+                            .setTimeToLiveSeconds(cacheConfig.getTtl())
+                            .setEvictionConfig(new EvictionConfig()
+                                    .setSize(cacheConfig.getRecordsInMemory())
+                                    .setMaxSizePolicy(MaxSizePolicy.FREE_HEAP_SIZE)
+                                    .setEvictionPolicy(EvictionPolicy.LRU)));
+        });
         return config;
     }
 
