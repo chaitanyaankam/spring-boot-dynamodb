@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +21,8 @@ public class BasicController {
     @GetMapping("/inMemory")
     public @ResponseBody List<String> getInMemoryResult() {
         LOGGER.info("find All Using Rest Service Call ....");
-        return cacheRestCallsService.findAllUsingRestServiceCall();
+        List<String> otherFacts = new ArrayList<>();
+        otherFacts.add("Test");
+        return cacheRestCallsService.findAllUsingRestServiceCall(otherFacts);
     }
 }
