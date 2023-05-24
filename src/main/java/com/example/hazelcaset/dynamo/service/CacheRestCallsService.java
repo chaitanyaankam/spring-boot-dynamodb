@@ -13,7 +13,6 @@ import java.util.List;
 public class CacheRestCallsService {
     Logger LOGGER = LoggerFactory.getLogger(CacheRestCallsService.class);
 
-    //@Cacheable(cacheNames = "default-rest-cache")
     @Cacheable(key="#otherFacts", value = "default-rest-cache")
     public List<String> findAllUsingRestServiceCall(List<String> otherFacts) {
         LOGGER.info("fetching from the REST call.......");
